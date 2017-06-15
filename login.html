@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content">
+			<div id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" value="">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码" value="">
+				</div>
+			</div>
+			<div class="mui-content-padded">
+				<button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary btn-block">登录</button>
+				<div class="link-area">
+					<a id='reg'>注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init({
+					statusBarBackground: '#f7f7f7'
+				});
+				$.plusReady(function() {
+
+					//检查 "登录状态/锁屏状态" 结束
+					var loginButton = doc.getElementById('login');
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('password');
+					var regButton = doc.getElementById('reg');
+					var forgetButton = doc.getElementById('forgetPassword');
+					loginButton.addEventListener('tap', function(event) {
+						var loginInfo = {
+							username: accountBox.value,
+							password: passwordBox.value,
+							client_id: 3,
+							client_secret: 'GTQCEuQDNIgPMBlWqBfoTqiOa101TcaIhHV4Umf3',
+							scope: '*',
+							grant_type: 'password'
+						};
+						var check = true;
+						mui("#login-form input").each(function() {
+							//若当前input为空，则alert提醒 
+							if(!this.value || this.value.trim() == '') {
+								mui.toast("帐号或密码不能为空", '提示', function() {}, 'div');
+								check = false;
+								return false;
+							}
+						});
+						if(check) {
+							mui.ajax('http://juhe.ldufd.com/oauth/token', {
+								data: loginInfo,
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(res) {
+									if(!res.hasOwnProperty("error")) {
+										localStorage.setItem('token', res.access_token);
+										var index = plus.webview.getLaunchWebview();
+										plus.webview.show(index);
+										//保存登录时间
+										localStorage.setItem('login_time',  (new Date()).valueOf());
+									} else {
+										//console.log(res);
+										mui.alert(res.msg, '登录失败', function() {}, 'div');
+										return false;
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('帐号或密码错误', '登录失败', function() {}, 'div');
+								}
+							});
+
+						}
+					});
+
+					$.enterfocus('#login-form input', function() {
+						$.trigger(loginButton, 'tap');
+					});
+
+					regButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: 'reg.html',
+							id: 'reg',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}, false);
+					forgetButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: 'forget_password.html',
+							id: 'forget_password',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}, false);
+
+					//					var backButtonPress = 0;
+					//					$.back = function(event) {
+					//						backButtonPress++;
+					//						if(backButtonPress > 1) {
+					//							plus.runtime.quit();
+					//						} else {
+					//							plus.nativeUI.toast('再按一次退出应用');
+					//						}
+					//						setTimeout(function() {
+					//							backButtonPress = 0;
+					//						}, 1000);
+					//						return false;
+					//					};
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

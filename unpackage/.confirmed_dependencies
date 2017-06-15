@@ -1,0 +1,133 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"images/yuantiao.jpg",
+			"js/mui.min.js",
+			"css/common.css",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"images/shuijiao.jpg",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"images/default-loading.jpg",
+			"js/template.js",
+			"js/app.js",
+			"css/style.css"
+		],
+		"refer": [
+			"article/index.html",
+			"login.html",
+			"profile.html"
+		]
+	},
+	"article/index.html": {
+		"resources": [
+			"images/avatar.png",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/style.css",
+			"article/index.html",
+			"js/template.js"
+		],
+		"refer": []
+	},
+	"login.html": {
+		"resources": [
+			"js/mui.enterfocus.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/style.css"
+		],
+		"refer": [
+			"reg.html"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/style.css"
+		],
+		"refer": []
+	},
+	"profile.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"images/avatar.png",
+			"css/mui.min.css",
+			"css/style.css"
+		],
+		"refer": [
+			"user/index.html",
+			"comment/index.html",
+			"collection/index.html",
+			"feedback.html"
+		]
+	},
+	"user/index.html": {
+		"refer": [
+			"user/reset_password.html",
+			"user/setName.html",
+			"user/setEmail.html"
+		],
+		"resources": []
+	},
+	"user/reset_password.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/style.css"
+		],
+		"refer": []
+	},
+	"collection/index-list.html": {
+		"resources": [
+			"images/yuantiao.jpg",
+			"images/shuijiao.jpg",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/template.js"
+		],
+		"refer": []
+	},
+	"comment/index.html": {
+		"resources": [
+			"comment/index-list.html"
+		],
+		"refer": [
+			"comment/index-list.html"
+		]
+	},
+	"collection/index.html": {
+		"resources": [
+			"collection/index-list.html",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"collection/index-list.html"
+		]
+	},
+	"feedback.html": {
+		"resources": [
+			"css/feedback-page.css",
+			"js/feedback-page.js",
+			"images/iconfont-tianjia.png"
+		],
+		"refer": []
+	}
+}

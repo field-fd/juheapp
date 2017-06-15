@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">新闻详情</h1>
+		</header>
+		<div class="mui-content article-content mui-scroll">
+			<h3 id="title"></h3>
+			<div id="content"></div>
+			<div class="content-footer">
+				<button class="mui-btn mui-btn mui-pull-right" id="collect">收藏</button>
+			</div>
+			<div class="mui-table-view" style="padding-bottom: 60px;">
+				<div class="mui-media media-comment">
+					<p>评论
+						<font id="comment-num"></font>条
+					</p>
+				</div>
+				<div class="media-comment-item">
+					<div class="mui-media">
+						<img class="mui-media-object mui-pull-left" src="../images/avatar.png" data-id="{{$value.user_id}}">
+						<div class="mui-media-body">
+							<h5>biubiubiu醉梦</h5>
+							<div class="comment-item">
+								<div class="comment-content">
+									你真是6的一批
+								</div>
+								<p>2017-5-21 10:16</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="chat-footer">
+			<div class="mui-input-row">
+				<textarea id="comment-content" class="mui-input-clear" placeholder="输入你想评论内容..." rows="1"></textarea>
+			</div>
+			<button type="button" id="submit">发送</button>
+		</div>
+		<script id="list-tpl" type="text/html">
+			{{each comments}}
+			<div class="media-comment-item">
+				<div class="mui-media">
+					<img class="mui-media-object mui-pull-left" src="{{$value.user.avatar}}?imageView2/1/w/60/h/60/q/75|imageslim" data-id="{{$value.user.id}}">
+					<div class="mui-media-body">
+						<h5>{{$value.user.name}}</h5>
+						<div class="comment-item">
+							<div class="comment-content">
+								{{$value.content}}
+							</div>
+							<p>{{$value.created_at}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<script id="comment-tpl" type="text/html">
+			<div class="media-comment-item">
+				<div class="mui-media">
+					<img class="mui-media-object mui-pull-left" src="{{avatar}}?imageView2/1/w/60/h/60/q/75|imageslim" data-id="{{id}}">
+					<div class="mui-media-body">
+						<h5>{{name}}</h5>
+						<div class="comment-item">
+							<p class="comment-content">
+								{{content}}
+							</p>
+							<p>{{created_at}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/template.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+			(function($, doc) {
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					var data_id = self.data_id;
+					var url = 'http://juhe.ldufd.com/api/article/' + data_id;
+
+					mui.ajax(url, {
+						data: {},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒； 
+						headers: {
+								'Authorization': 'Bearer ' + localStorage.getItem('token')
+							},
+						success: function(res) {
+							//关闭等待框
+							plus.nativeUI.closeWaiting();
+							//显示当前页面
+							var articlePage = plus.webview.getWebviewById('article')
+							articlePage.show();
+							if(res.code == 200) {
+								freshPage(res.data);
+								var tpl = template('list-tpl', res.data);
+								document.querySelector('.media-comment').insertAdjacentHTML('beforeend', tpl);
+
+							} else {
+								mui.alert(res.message, '提示', function() {}, 'div');
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//关闭等待框
+							plus.nativeUI.closeWaiting();
+							//显示当前页面
+							var articlePage = plus.webview.getWebviewById('article')
+							articlePage.show();
+							mui.alert('获取数据失败', '提示', function() {}, 'div');
+						}
+					});
+
+
+					function get(elem) {
+						return document.getElementById(elem);
+					}
+
+					function freshPage(data) {
+						get('title').innerText = data.title;
+						get('content').innerHTML = data.content;
+						get('comment-num').innerText = data.comment_num;
+						if(data.is_collect) {
+							app.removeClass(get('collect'), 'mui-btn');
+							app.addClass(get('collect'), 'mui-btn-warning');
+							get('collect').style.color = '#FFF';
+							get('collect').innerText = '已收藏';
+						}
+					}
+					 
+					
+					//发表评论
+					var submitBtn = get('submit');
+					get('submit').addEventListener('tap', function(event) {
+						var isLogin = app.issetToken();
+						if(!isLogin) return;
+						var content = get("comment-content").value;
+						if(content == '') {
+							mui.toast('请填写内容');
+							return;
+						}
+						var data = {
+							article_id: data_id,
+							content: content
+						};
+						submitBtn.setAttribute('disabled', 'disabled');
+						mui.ajax('http://juhe.ldufd.com/api/article/comment', {
+							data: data,
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Authorization': 'Bearer ' + localStorage.getItem('token')
+							},
+							success: function(res) {
+								submitBtn.removeAttribute('disabled');
+								if(res.code == 200) {
+									mui.toast('评论成功');
+									get("comment-content").value = '';
+									get('comment-num').innerText = parseInt(get('comment-num').innerText) + 1;
+									var comment_tpl = template('comment-tpl', res.data);
+									document.querySelector('.media-comment').insertAdjacentHTML('beforeend', comment_tpl);
+								} else {
+									mui.alert(res.msg, '发表失败', function() {}, 'div');
+									return false;
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								submitBtn.removeAttribute('disabled');
+								mui.alert('服务器错误');
+							}
+						});
+					})
+					
+					//收藏
+					get('collect').addEventListener('tap', function() {
+						var isLogin = app.issetToken();
+						if(!isLogin) return;
+						var that = this;
+						mui.ajax('http://juhe.ldufd.com/api/collection/store/' + data_id, {
+							data: {},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Authorization': 'Bearer ' + localStorage.getItem('token')
+							},
+							success: function(res) {
+								if(res.code == 200) {
+									mui.toast('收藏成功');
+									app.removeClass(get('collect'), 'mui-btn');
+									app.addClass(get('collect'), 'mui-btn-warning');
+							        get('collect').style.color = '#FFF';
+							        get('collect').innerText = '已收藏';
+								} else {
+									mui.alert(res.msg, '收藏失败', function() {}, 'div');
+									return false;
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.alert('服务器错误', '提示', function() {}, 'div');
+							}
+						});
+					})
+				})
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

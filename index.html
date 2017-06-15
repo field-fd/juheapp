@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="mui-input-row mui-search mui-pull-left" style="width: 90%;">
+				<input type="search" class="mui-input-clear" placeholder="">
+			</div>
+			<a id="profile" class="mui-icon mui-icon-contact mui-pull-right"></a>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							推荐
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							国内
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							国际
+						</a>
+						<a class="mui-control-item" href="#item4mobile">
+							社会
+						</a>
+						<a class="mui-control-item" href="#item5mobile">
+							体育
+						</a>
+						<a class="mui-control-item" href="#item6mobile">
+							娱乐
+						</a>
+						<a class="mui-control-item" href="#item7mobile">
+							军事
+						</a>
+						<a class="mui-control-item" href="#item8mobile">
+							科技
+						</a>
+						<a class="mui-control-item" href="#item9mobile">
+							财经
+						</a>
+						<a class="mui-control-item" href="#item10mobile">
+							股市
+						</a>
+						<a class="mui-control-item" href="#item11mobile">
+							美股
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item5mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item6mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item7mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item8mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item9mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item10mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item11mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script id="tpl" type="text/html">
+			{{each data}}
+			<li class="index-list" data-id="{{$value.id}}">
+				{{if $value.images_length == 0}}
+				<h4>{{$value.title}}</h4> {{else if $value.images_length
+				< 3}} <div class="list-one">
+					<h4 class="mui-col-xs-7">{{$value.title}}</h4>
+					<img src="{{$value.images[0]}}" />
+					</div>
+					{{else if $value.images_length >= 3}}
+					<h4>{{$value.title}}</h4>
+					<div class="image-box">
+						<div class="image-item mui-col-xs-4">
+							<img src="{{$value.images[0]}}" />
+						</div>
+						<div class="image-item mui-col-xs-4">
+							<img src="{{$value.images[1]}}" />
+						</div>
+						<div class="image-item mui-col-xs-4">
+							<img src="{{$value.images[2]}}" />
+						</div>
+					</div>
+					{{/if}}
+					<p>
+						<span>{{$value.source}}</span>
+						<span>{{$value.comment_num}}条评论</span>
+						<span>{{$value.created_at}}</span>
+					</p>
+			</li>
+			{{/each}}
+
+		</script>
+		<script src="./js/mui.min.js"></script>
+		<script src="./js/app.js"></script>
+		<script src="./js/template.js"></script>
+		<script src="./js/mui.pullToRefresh.js"></script>
+		<script src="./js/mui.pullToRefresh.material.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+
+				var page = 1;
+
+				function downfresh(self, index) {
+					//通过ajax从服务器获取新数据
+					mui.ajax('http://juhe.ldufd.com/api/index', {
+						data: {
+							page: page
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(res) {
+							if(res.code == 200) {
+								var tpl = template('tpl', res.data);
+								ul = self.element.querySelector('.mui-table-view');
+								ul.insertAdjacentHTML('afterBegin', tpl);
+								page++;
+								self.endPullDownToRefresh();
+
+							} else {
+								self.endPullDownToRefresh();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							self.endPullDownToRefresh();
+							mui.alert('获取数据失败', '提示', function() {}, 'div');
+						}
+					});
+				}
+
+				function upfresh(self, index) {
+					//通过ajax从服务器获取新数据
+					mui.ajax('http://juhe.ldufd.com/api/index', {
+						data: {
+							page: page
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(res) {
+							if(res.code == 200) {
+								var tpl = template('tpl', res.data);
+								ul = self.element.querySelector('.mui-table-view');
+								ul.insertAdjacentHTML('beforeend', tpl);
+								page++;
+								self.endPullUpToRefresh();
+
+							} else {
+								self.endPullUpToRefresh();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							self.endPullUpToRefresh();
+							mui.alert('获取数据失败', '提示', function() {}, 'div');
+						}
+					});
+				}
+
+				$.ready(function() {
+					index_num = 0;
+					$.each($('#sliderSegmentedControl .mui-control-item'), function() {
+						this.index = index_num++;
+					})
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									downfresh(self, index);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									upfresh(self, index);
+								}
+							}
+						});
+					});
+					var first_fresh = document.querySelector('.mui-slider-group .mui-scroll')[0];
+						//通过ajax从服务器获取新数据
+						mui.ajax('http://juhe.ldufd.com/api/index', {
+							data: {
+								page: page
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								if(res.code == 200) {
+									var ul = $('.mui-slider-group .mui-table-view')[0];
+									var tpl = template('tpl', res.data);
+									ul.insertAdjacentHTML('afterBegin', tpl);
+									page++;
+									first_fresh.endPullUpToRefresh();
+
+								} else {
+									self.endPullUpToRefresh();
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								first_fresh.endPullUpToRefresh();
+								mui.alert('获取数据失败', '提示', function() {}, 'div');
+							}
+						});
+					
+					$('#sliderSegmentedControl').on('tap', '.mui-control-item', function() {
+						var isFirst = this.getAttribute('data-isFirst');
+						if(!isFirst) {
+							this.setAttribute('data-isFirst', 'true');
+						} else {
+							return;
+						}
+						var index = this.index;
+						var self = document.querySelector('.mui-slider-group .mui-scroll')[index];
+						//通过ajax从服务器获取新数据
+						mui.ajax('http://juhe.ldufd.com/api/index', {
+							data: {
+								page: page
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								if(res.code == 200) {
+									var ul = $('.mui-slider-group .mui-table-view')[index];
+									var tpl = template('tpl', res.data);
+									ul.insertAdjacentHTML('afterBegin', tpl);
+									page++;
+									self.endPullUpToRefresh();
+
+								} else {
+									self.endPullUpToRefresh();
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								self.endPullUpToRefresh();
+								mui.alert('获取数据失败', '提示', function() {}, 'div');
+							}
+						});
+					})
+
+					document.getElementById('profile').addEventListener('tap', function() {
+						var isLogin = app.issetToken();
+						if(isLogin) {
+							$.openWindow({
+								url: 'profile.html',
+								id: 'profile',
+								show: {
+									aniShow: 'zoom-fade-out'
+								}
+							})
+						}
+					})
+
+					$('.mui-table-view').on('tap', 'li', function() {
+						var data_id = this.getAttribute('data-id');
+						$.openWindow({
+							url: 'article/index.html',
+							id: 'article',
+							extras: { data_id: data_id },
+							show: {
+							    autoShow: false
+						    }
+						})
+					})
+
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>
