@@ -1,241 +1,241 @@
 <!doctype html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../css/style.css" />
-		<style>
-			#email {
-				-webkit-user-select: none !important;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+    #email {
+        -webkit-user-select: none !important;
+    }
+    </style>
+</head>
 
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">个人资料</h1>
-		</header>
-		<div class="mui-content">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
-					<a id="head">头像
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">个人资料</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a id="head">头像
 						<span class="mui-pull-right head">
 							<img class="head-img mui-action-preview" src="" id="avatar"/>
 						</span>
 					</a>
-				</li>
-				<li class="mui-table-view-cell" id="changeName">昵称
-					<span class="mui-pull-right" id="name"></span>
-				</li>
-				<li class="mui-table-view-cell" id="changeEmail">邮箱
-					<span class="mui-pull-right" id="email"></span>
-				</li>
-			</ul>
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell text-center" id="updatepwd">修改密码</li>
-			</ul>
-		</div>
-		<script src="../js/mui.min.js"></script>
-		<script src="../js/app.js"></script>
-		<script type="text/javascript">
-			mui.init();
-			(function($, doc) {
-				$.plusReady(function() {
-					var avatar = doc.getElementById('avatar');
-					var head = doc.getElementById('head');
-					var user_email = '';
-					var user_name = "";
-					$.ajax('http://10.0.2.2/juheapp/public/index.php/api/user', {
-						data: {},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						headers: {
-							'Authorization': 'Bearer ' + localStorage.getItem('token')
-						},
-						success: function(res) {
-							if(res.code == 200) {
-								avatar.src = res.data.avatar;
-								doc.getElementById('name').innerText = res.data.name;
-								doc.getElementById('email').innerText = res.data.email;
-								user_email = res.data.email;
-								user_name = res.data.name;
-							} else {
-								mui.alert(res.message, '获取个人信息失败', function() {}, 'div');
-								return false;
-							}
-						},
-						error: function(xhr, type, errorThrown) {
-							mui.alert('服务器错误', '提示', function() {}, 'div');
-						}
-					});
+            </li>
+            <li class="mui-table-view-cell" id="changeName">昵称
+                <span class="mui-pull-right" id="name"></span>
+            </li>
+            <li class="mui-table-view-cell" id="changeEmail">邮箱
+                <span class="mui-pull-right" id="email"></span>
+            </li>
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell text-center" id="updatepwd">修改密码</li>
+        </ul>
+    </div>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script type="text/javascript">
+    mui.init();
+    (function($, doc) {
+        $.plusReady(function() {
+            var avatar = doc.getElementById('avatar');
+            var head = doc.getElementById('head');
+            var user_email = '';
+            var user_name = "";
+            $.ajax('http://10.0.2.2/juheapp/public/index.php/api/user', {
+                data: {},
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function(res) {
+                    if (res.code == 200) {
+                        avatar.src = res.data.avatar;
+                        doc.getElementById('name').innerText = res.data.name;
+                        doc.getElementById('email').innerText = res.data.email;
+                        user_email = res.data.email;
+                        user_name = res.data.name;
+                    } else {
+                        mui.alert(res.message, '获取个人信息失败', function() {}, 'div');
+                        return false;
+                    }
+                },
+                error: function(xhr, type, errorThrown) {
+                    mui.alert('服务器错误', '提示', function() {}, 'div');
+                }
+            });
 
-					doc.getElementById('changeEmail').addEventListener('tap', function() {
-						mui.openWindow({
-							url: 'setEmail.html',
-							id: 'setEmail',
-							extras: {
-								email: user_email
-							},
-						})
-					})
+            doc.getElementById('changeEmail').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: 'setEmail.html',
+                    id: 'setEmail',
+                    extras: {
+                        email: user_email
+                    },
+                })
+            })
 
-					doc.getElementById('changeName').addEventListener('tap', function() {
-						mui.openWindow({
-							url: 'setName.html',
-							id: 'setName',
-							extras: {
-								name: user_name
-							},
-						})
-					})
+            doc.getElementById('changeName').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: 'setName.html',
+                    id: 'setName',
+                    extras: {
+                        name: user_name
+                    },
+                })
+            })
 
-					var w;
+            var w;
 
-					head.addEventListener('tap',
-						function() {
-							var IMAGE_UNSPECIFIED = "image/*"; //相册显示的文件类型
-							var PHOTOZOOM = 2; // 获取完图片返回key
-							var PHOTOLAT = 1; // 剪裁完毕后返回key
-							var main = plus.android.runtimeMainActivity(); //h5+获取应用主Activity实例对象
-							var Intent = plus.android.importClass("android.content.Intent");
-							//导入java类intent对象  以下importClass都是使用安卓原生类
-							var MediaStore = plus.android.importClass("android.provider.MediaStore");
-							var File = plus.android.importClass("java.io.File");
-							var Uri = plus.android.importClass("android.net.Uri");
-							var intent = new Intent(Intent.ACTION_PICK, null);
-							intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-							intent.putExtra("scale", true);
-							intent.putExtra("scaleUpIfNeeded", true);
-							var outPutPath = plus.io.convertLocalFileSystemURL("_www/head.jpg");
-							main.startActivityForResult(intent, PHOTOZOOM);
-							main.onActivityResult = function(requestCode, resultCode, data) {
-								if(PHOTOZOOM == requestCode) {
+            head.addEventListener('tap',
+                function() {
+                    var IMAGE_UNSPECIFIED = "image/*"; //相册显示的文件类型
+                    var PHOTOZOOM = 2; // 获取完图片返回key
+                    var PHOTOLAT = 1; // 剪裁完毕后返回key
+                    var main = plus.android.runtimeMainActivity(); //h5+获取应用主Activity实例对象
+                    var Intent = plus.android.importClass("android.content.Intent");
+                    //导入java类intent对象  以下importClass都是使用安卓原生类
+                    var MediaStore = plus.android.importClass("android.provider.MediaStore");
+                    var File = plus.android.importClass("java.io.File");
+                    var Uri = plus.android.importClass("android.net.Uri");
+                    var intent = new Intent(Intent.ACTION_PICK, null);
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+                    intent.putExtra("scale", true);
+                    intent.putExtra("scaleUpIfNeeded", true);
+                    var outPutPath = plus.io.convertLocalFileSystemURL("_www/head.jpg");
+                    main.startActivityForResult(intent, PHOTOZOOM);
+                    main.onActivityResult = function(requestCode, resultCode, data) {
+                        if (PHOTOZOOM == requestCode) {
 
-									var file = new File(outPutPath);
-									// 输出目录uri
-									var outPutUri = Uri.fromFile(file);
-									if(data == undefined) {
-										return false;
-									}
-									plus.android.importClass(data);
-									var uri = data.getData();
-									var cropIntent = new Intent("com.android.camera.action.CROP"); //裁剪
-									cropIntent.setDataAndType(uri, IMAGE_UNSPECIFIED);
-									// 截图完毕后 输出目录
-									cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
-									cropIntent.putExtra("crop", "true");
-									//aspectX aspectY 是宽高的比例
-									cropIntent.putExtra("aspectX", 1);
-									cropIntent.putExtra("aspectY", 1);
-									// outputX outputY 是裁剪图片宽高
-									cropIntent.putExtra("outputX", 70);
-									cropIntent.putExtra("outputY", 70);
-									cropIntent.putExtra("return-data", true);
-									main.startActivityForResult(cropIntent, PHOTOLAT);
-								} else if(requestCode == PHOTOLAT) {
-									if(data == undefined) {
-										return false;
-									}
-									var a = new File(outPutPath);
-									if(!a.exists()) {
-										console.log(outPutPath);
-										mui.toast('裁剪错误');
-										return false;
-									}
-									// 弹出系统等待对话框
-									w = plus.nativeUI.showWaiting("正在上传请稍候...");
-									//执行上传操作
-									var canvas = document.createElement('canvas'),
-										ctx = canvas.getContext('2d'),
-										img = new Image;
-									img.crossOrigin = 'Anonymous';
-									img.onload = function() {
-										canvas.height = img.height;
-										canvas.width = img.width;
-										ctx.drawImage(img, 0, 0);
-										var dataURL = canvas.toDataURL();
-										var xhr = new XMLHttpRequest();
-										var base64 = dataURL.split(",")[1];
-										xhr.open("post", "http://api.ldustu.com/api/uploadbase64img", true);
-										xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.getItem('token'));
-										xhr.onreadystatechange = function() {
-											if(xhr.readyState == 4) {
-												var res = eval('(' + xhr.responseText + ')');
-												if(res.code == 200) {
+                            var file = new File(outPutPath);
+                            // 输出目录uri
+                            var outPutUri = Uri.fromFile(file);
+                            if (data == undefined) {
+                                return false;
+                            }
+                            plus.android.importClass(data);
+                            var uri = data.getData();
+                            var cropIntent = new Intent("com.android.camera.action.CROP"); //裁剪
+                            cropIntent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+                            // 截图完毕后 输出目录
+                            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+                            cropIntent.putExtra("crop", "true");
+                            //aspectX aspectY 是宽高的比例
+                            cropIntent.putExtra("aspectX", 1);
+                            cropIntent.putExtra("aspectY", 1);
+                            // outputX outputY 是裁剪图片宽高
+                            cropIntent.putExtra("outputX", 70);
+                            cropIntent.putExtra("outputY", 70);
+                            cropIntent.putExtra("return-data", true);
+                            main.startActivityForResult(cropIntent, PHOTOLAT);
+                        } else if (requestCode == PHOTOLAT) {
+                            if (data == undefined) {
+                                return false;
+                            }
+                            var a = new File(outPutPath);
+                            if (!a.exists()) {
+                                console.log(outPutPath);
+                                mui.toast('裁剪错误');
+                                return false;
+                            }
+                            // 弹出系统等待对话框
+                            w = plus.nativeUI.showWaiting("正在上传请稍候...");
+                            //执行上传操作
+                            var canvas = document.createElement('canvas'),
+                                ctx = canvas.getContext('2d'),
+                                img = new Image;
+                            img.crossOrigin = 'Anonymous';
+                            img.onload = function() {
+                                canvas.height = img.height;
+                                canvas.width = img.width;
+                                ctx.drawImage(img, 0, 0);
+                                var dataURL = canvas.toDataURL();
+                                var xhr = new XMLHttpRequest();
+                                var base64 = dataURL.split(",")[1];
+                                xhr.open("post", "http://api.ldustu.com/api/uploadbase64img", true);
+                                xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.getItem('token'));
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4) {
+                                        var res = eval('(' + xhr.responseText + ')');
+                                        if (res.code == 200) {
 
-													avatar.src = dataURL;
-													avatar.setAttribute('data-src', res.data);
-													updataAvatar(res.data);
-												} else {
-													w.close();
-													$.toast(res.message);
-												};
-											};
-										};
-										//表单数据 
-										var fd = new FormData();
-										fd.append("img", base64);
-										//执行发送 
-										xhr.send(fd);
-									}
-									img.src = outPutPath;
-								}
+                                            avatar.src = dataURL;
+                                            avatar.setAttribute('data-src', res.data);
+                                            updataAvatar(res.data);
+                                        } else {
+                                            w.close();
+                                            $.toast(res.message);
+                                        };
+                                    };
+                                };
+                                //表单数据 
+                                var fd = new FormData();
+                                fd.append("img", base64);
+                                //执行发送 
+                                xhr.send(fd);
+                            }
+                            img.src = outPutPath;
+                        }
 
-							}
-						});
+                    }
+                });
 
-					function updataAvatar(avatar_url) {
-						$.ajax('http://api.ldustu.com/api/user/change/avatar', {
-							data: {
-								avatar_url: avatar_url
-							},
-							dataType: 'json', //服务器返回json格式数据
-							type: 'post', //HTTP请求类型
-							timeout: 10000, //超时时间设置为10秒；
-							headers: {
-								'Authorization': 'Bearer ' + localStorage.getItem('token')
-							},
-							success: function(data) {
-								if(data.code == 200) {
-									w.close();
-									var indexPage = plus.webview.getLaunchWebview();
-									mui.fire(indexPage, 'update_user_avatar', {
-										avatar: avatar_url
-									});
-									$.toast('修改成功');
-								} else {
-									mui.toast(data.message);
-									return false;
-								}
-							},
-							error: function(xhr, type, errorThrown) {
-								mui.alert('服务器错误');
-							}
-						});
-					}
+            function updataAvatar(avatar_url) {
+                $.ajax('http://api.ldustu.com/api/user/change/avatar', {
+                    data: {
+                        avatar_url: avatar_url
+                    },
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 10000, //超时时间设置为10秒；
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            w.close();
+                            var indexPage = plus.webview.getLaunchWebview();
+                            mui.fire(indexPage, 'update_user_avatar', {
+                                avatar: avatar_url
+                            });
+                            $.toast('修改成功');
+                        } else {
+                            mui.toast(data.message);
+                            return false;
+                        }
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        mui.alert('服务器错误');
+                    }
+                });
+            }
 
-					doc.getElementById('updatepwd').addEventListener('tap', function() {
-						$.openWindow({
-							url: 'reset_password.html',
-							id: 'reset_password',
-						})
-					})
+            doc.getElementById('updatepwd').addEventListener('tap', function() {
+                $.openWindow({
+                    url: 'reset_password.html',
+                    id: 'reset_password',
+                })
+            })
 
-					window.addEventListener("update_user_email", function(event) {
-						doc.getElementById("email").innerHTML = event.detail.email;
-					});
+            window.addEventListener("update_user_email", function(event) {
+                doc.getElementById("email").innerHTML = event.detail.email;
+            });
 
-					window.addEventListener("update_user_name", function(event) {
-						doc.getElementById("name").innerHTML = event.detail.name;
-					});
-				});
-			})(mui, document)
-		</script>
-	</body>
+            window.addEventListener("update_user_name", function(event) {
+                doc.getElementById("name").innerHTML = event.detail.name;
+            });
+        });
+    })(mui, document)
+    </script>
+</body>
 
 </html>
