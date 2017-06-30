@@ -227,7 +227,9 @@
 					"article/index.html",
 					"js/template.js"
 				],
-				"refer": [],
+				"refer": [
+					"login.html"
+				],
 				"priority": 0
 			},
 			"login.html": {
@@ -240,7 +242,8 @@
 					"css/style.css"
 				],
 				"refer": [
-					"reg.html"
+					"reg.html",
+					"forget_password.html"
 				],
 				"priority": 0
 			},
@@ -268,12 +271,19 @@
 					"user/index.html",
 					"comment/index.html",
 					"collection/index.html",
-					"feedback.html"
+					"feedback.html",
+					"login.html"
 				],
 				"priority": 0
 			},
 			"user/index.html": {
-				"resources": [],
+				"resources": [
+					"js/mui.min.js",
+					"js/app.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/style.css"
+				],
 				"refer": [
 					"user/reset_password.html",
 					"user/setName.html",
@@ -303,12 +313,15 @@
 					"css/style.css",
 					"js/template.js"
 				],
-				"refer": [],
+				"refer": [
+					"article/index.html"
+				],
 				"priority": 0
 			},
 			"comment/index.html": {
 				"resources": [
-					"comment/index-list.html"
+					"comment/index-list.html",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -328,6 +341,27 @@
 					"images/iconfont-tianjia.png"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"forget_password.html": {
+				"resources": [
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"comment/index-list.html": {
+				"resources": [
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/style.css",
+					"js/template.js"
+				],
+				"refer": [
+					"article/index.html"
+				],
 				"priority": 0
 			}
 		},

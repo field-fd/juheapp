@@ -38,7 +38,7 @@
 	 */
 	owner.issetToken = function(jumpURL) {
 		var token = localStorage.getItem('token');
-		var url = jumpURL ? jumpURL : './login.html';
+		var url = jumpURL ? jumpURL : '/login.html';
 		if(!token) {
 			mui.openWindow({
 				url: url,

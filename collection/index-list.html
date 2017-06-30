@@ -21,32 +21,32 @@
 			</div>
 		</div>
 		<script id="tpl" type="text/html">
-			{{each article}}
-			<li class="index-list" data-id="{{$value.id}}">
-				{{if $value.images_length == 0}}
-				<h4>{{$value.title}}</h4> {{else if $value.images_length
+			{{each data}}
+			<li class="index-list" data-id="{{$value.article_id}}">
+				{{if $value.article.images_length == 0}}
+				<h4>{{$value.article.title}}</h4> {{else if $value.article.images_length
 				< 3}} <div class="list-one">
-					<h4 class="mui-col-xs-7">{{$value.title}}</h4>
-					<img src="{{$value.images[0]}}" />
+					<h4 class="mui-col-xs-7">{{$value.article.title}}</h4>
+					<img src="{{$value.article.images[0]}}" />
 					</div>
-					{{else if $value.images_length >= 3}}
-					<h4>{{$value.title}}</h4>
+					{{else if $value.article.images_length >= 3}}
+					<h4>{{$value.article.title}}</h4>
 					<div class="image-box">
 						<div class="image-item mui-col-xs-4">
-							<img src="{{$value.images[0]}}" />
+							<img src="{{$value.article.images[0]}}" />
 						</div>
 						<div class="image-item mui-col-xs-4">
-							<img src="{{$value.images[1]}}" />
+							<img src="{{$value.article.images[1]}}" />
 						</div>
 						<div class="image-item mui-col-xs-4">
-							<img src="{{$value.images[2]}}" />
+							<img src="{{$value.article.images[2]}}" />
 						</div>
 					</div>
 					{{/if}}
 					<p>
-						<span>{{$value.source}}</span>
-						<span>{{$value.comment_num}}条评论</span>
-						<span>{{$value.created_at}}</span>
+						<span>{{$value.article.source}}</span>
+						<span>{{$value.article.comment_num}}条评论</span>
+						<span>{{$value.article.created_at}}</span>
 					</p>
 			</li>
 			{{/each}}
@@ -73,7 +73,7 @@
 
 			function endpullfresh() {
 				//通过ajax从服务器获取新数据
-				mui.ajax('http://juhe.ldufd.com/api/collections', {
+				mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/collections', {
 					data: {
 						page: page
 					},
@@ -92,8 +92,8 @@
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 
 						} else {
-							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
-							mui.alert(res.msg, '提示', function() {}, 'div');
+							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+							//mui.toast(res.message);
 						}
 					},
 					error: function(xhr, type, errorThrown) {
@@ -105,7 +105,7 @@
 			}
 
 			mui.ready(function(){
-				mui('#help-list').on('tap', '.help-content-item', function() {
+				mui('#collection-list').on('tap', 'li', function() {
 					var data_id = this.getAttribute('data-id');
 					mui.openWindow({
 						url: '../article/index.html',

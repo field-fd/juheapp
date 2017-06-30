@@ -54,7 +54,7 @@
 							username: accountBox.value,
 							password: passwordBox.value,
 							client_id: 3,
-							client_secret: 'GTQCEuQDNIgPMBlWqBfoTqiOa101TcaIhHV4Umf3',
+							client_secret: 'dHbef10EHWF7Fie1MfKruRpXOJMn9APqvzNVkkfB',
 							scope: '*',
 							grant_type: 'password'
 						};
@@ -68,7 +68,7 @@
 							}
 						});
 						if(check) {
-							mui.ajax('http://juhe.ldufd.com/oauth/token', {
+							mui.ajax('http://10.0.2.2/juheapp/public/index.php/oauth/token', {
 								data: loginInfo,
 								dataType: 'json', //服务器返回json格式数据
 								type: 'post', //HTTP请求类型

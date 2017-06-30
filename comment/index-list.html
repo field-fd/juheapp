@@ -16,34 +16,22 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul id="list" class="notice-list">
-					<li class="mui-table-view">
-						<div class="mui-media">
-							<img class="mui-media-object mui-pull-left" src="{{$value.data.avatar}}?imageView2/1/w/60/h/60/q/75|imageslim">
-							<div class="mui-media-body">
-								<font>醉梦biubiubiu</font>
-								<p class="time">2017-5-22 13:07</p>
-							</div>
-							<div class="mui-media-footer">
-								回复：呵呵
-								<div class="article">第1个选项卡子项</div>
-							</div>
-						</div>
-					</li>
+
 				</ul>
 			</div>
 		</div>
 		<script id="list-tpl" type="text/html">
 			{{each data}}
-			<li class="mui-table-view">
+			<li class="mui-table-view" data-id="{{$value.article_id}}">
 				<div class="mui-media">
-					<img class="mui-media-object mui-pull-left" src="{{$value.data.avatar}}?imageView2/1/w/60/h/60/q/75|imageslim">
+					<img class="mui-media-object mui-pull-left" src="{{$value.user.avatar}}?imageView2/1/w/60/h/60/q/75|imageslim">
 					<div class="mui-media-body">
-						<font>{{$value.data.username}}</font>
+						<font>{{$value.user.username}}</font>
 						<p class="time">{{$value.created_at}}</p>
 					</div>
 					<div class="mui-media-footer">
-						回复：{{$value.data.comment_body}}
-						<div class="article">{{$value.data.commentable_title}}</div>
+						回复：{{$value.content}}
+						<div class="article">{{$value.article.title}}</div>
 					</div>
 				</div>
 			</li>
@@ -58,56 +46,42 @@
 					container: "#refreshContainer",
 					up: {
 						height: 50, //可选.默认50.触发上拉加载拖动距离
-						auto: false, //可选,默认false.自动上拉加载一次
+						auto: true, //可选,默认false.自动上拉加载一次
 						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
 						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
-						callback: function() {} //endpullfresh
+						callback: endpullfresh
 					},
 				},
 			});
 
-			var url;
 			var page = 1;
-			var type;
 
 			function endpullfresh() {
 				//通过ajax从服务器获取新数据
-				mui.ajax(url, {
+				mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/comments', {
 					data: {
 						page: page
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
-					timeout: 10000, //超时时间设置为10秒；
+					timeout: 10000, //超时时间设置为10秒； 
 					headers: {
 						'Authorization': 'Bearer ' + localStorage.getItem('token')
 					},
-					success: function(res) { //console.log(JSON.stringify(res.data));
-						var noticeDetailPage = plus.webview.getWebviewById('notice-detail');
-						//关闭等待框
-						plus.nativeUI.closeWaiting();
-						//显示当前页面
-						noticeDetailPage.show();
+					success: function(res) {
 						if(res.code == 200) {
-							res.data.type = type;
 							var tpl = template('list-tpl', res.data);
 							var html = document.getElementById('list').innerHTML;
-							document.getElementById('list').insertAdjacentHTML('beforeend', tpl);
-							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+							document.getElementById('list').innerHTML = html + tpl;
 							page++;
-							if(res.data.data.length <= 0)
-								mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
-						} else {
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
-							mui.toast(res.message);
+
+						} else {
+							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+							//mui.toast(res.message);
 						}
 					},
 					error: function(xhr, type, errorThrown) {
-						var noticeDetailPage = plus.webview.getWebviewById('notice-detail');
-						//关闭等待框
-						plus.nativeUI.closeWaiting();
-						//显示当前页面
-						noticeDetailPage.show();
 						mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 						mui.alert('获取数据失败', '提示', function() {}, 'div');
 					}
@@ -115,26 +89,12 @@
 
 			}
 
-			mui.ready(function() {
-
-				window.addEventListener("pull_fresh_list", function(e) {
-					type = e.detail.type;
-					url = 'http://api.ldustu.com/api/user/notifications/' + type;
-					endpullfresh();
-				});
-
+			mui.ready(function(){
 				mui('#list').on('tap', 'li', function() {
 					var data_id = this.getAttribute('data-id');
-					var type = this.getAttribute('data-type');
-					var url = '../help/detail.html';
-					var id = 'help-detail';
-					if(type == 'WhiteWall') {
-						url = '../wall/detail.html';
-						id = 'wall-detail';
-					}
 					mui.openWindow({
-						url: url,
-						id: id,
+						url: '../article/index.html',
+						id: 'article',
 						extras: {
 							data_id: data_id
 						},
@@ -143,6 +103,7 @@
 						}
 					})
 				})
+
 			})
 		</script>
 	</body>

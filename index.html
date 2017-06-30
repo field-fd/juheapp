@@ -100,7 +100,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<div class="mui-input-row mui-search mui-pull-left" style="width: 90%;">
-				<input type="search" class="mui-input-clear" placeholder="">
+				<form action="">
+					<input type="search" class="mui-input-clear" placeholder="" id="search">
+				</form>
 			</div>
 			<a id="profile" class="mui-icon mui-icon-contact mui-pull-right"></a>
 		</header>
@@ -148,7 +150,7 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									
+
 								</ul>
 							</div>
 						</div>
@@ -295,10 +297,11 @@
 				});
 
 				var page = 1;
+				//localStorage.setItem("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRiNzJjYmJiZTk5NWIyOWRjZmQ5MWNlMWQ5ODI0NTAyOTgxOTE2NWRkMTQyYTI5YWJhMTI4YjI1YWY0N2ZlOGEyZTY2NmU3Y2ZmMWU5MWUwIn0.eyJhdWQiOiIzIiwianRpIjoiZGI3MmNiYmJlOTk1YjI5ZGNmZDkxY2UxZDk4MjQ1MDI5ODE5MTY1ZGQxNDJhMjlhYmExMjhiMjVhZjQ3ZmU4YTJlNjY2ZTdjZmYxZTkxZTAiLCJpYXQiOjE0OTUxMDQ2MjMsIm5iZiI6MTQ5NTEwNDYyMywiZXhwIjoxNTI2NjQwNjIzLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.fjaPj0QexqMtrQJpNb91NttRhEkAiGLQmhDKBml8NwJe0Qa9HRrQ1b97MbAQQrTfH7V9IjRpF7zAGHuOVuwPmGl7qbFfTC1KYh6_oT6zi6SaZj9UUtSMurrgXVz-bJFutQzwIA7HpKiEYhX1YMWWRpRX6aq2DAhIeG3uTaRUT7KWaglny1yJt9wjlSUXC4g7iwC-9uRUg-6HC5j-lmLqSArhyGWGy_dSwT2UWIsshDi2tJ-BpAfaCJ6a4I009ZNyyAsLfPn1esIMvRFkvnrBwSegSRE-PwNYdIzJtqFBwmXNk6ZRuxIEWPESErLi6pVaDXhrP5HkN3RpfspCxMdy-evzbvLY0ax6ioHFTQWR3lYycm560tuvdmqECM4W1rrHF9IWknOMyYJoBG_zRFRU9n7g8nNXuvayqdiiw0v5Sa9vVn0-DL_Ts3VMUWWPoW03DspZjvWWTuIcC_dQz8wFM2jdv7qEP38_khZQLyPXZuZajnSy3Y15oe9TMQ0UxQrPYuaU7-fP4bhV-MZKrXc70865RW3PKBJWf0bPfGQR1SGKYIJ6lm1yBreEhGbs3kRDvTuryCTuRxwhzRpMjwXShmBaaCACQfhENPnxJlgFUuPBuy4ZbKKqqR9PgGbbExkwcoReBJmkLk87X-KBwxy8S5SuxrsHz236_e_E9VB7Aas")
 
 				function downfresh(self, index) {
 					//通过ajax从服务器获取新数据
-					mui.ajax('http://juhe.ldufd.com/api/index', {
+					mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/index', {
 						data: {
 							page: page
 						},
@@ -326,7 +329,7 @@
 
 				function upfresh(self, index) {
 					//通过ajax从服务器获取新数据
-					mui.ajax('http://juhe.ldufd.com/api/index', {
+					mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/index', {
 						data: {
 							page: page
 						},
@@ -375,32 +378,32 @@
 						});
 					});
 					var first_fresh = document.querySelector('.mui-slider-group .mui-scroll')[0];
-						//通过ajax从服务器获取新数据
-						mui.ajax('http://juhe.ldufd.com/api/index', {
-							data: {
-								page: page
-							},
-							dataType: 'json', //服务器返回json格式数据
-							type: 'get', //HTTP请求类型
-							timeout: 10000, //超时时间设置为10秒；
-							success: function(res) {
-								if(res.code == 200) {
-									var ul = $('.mui-slider-group .mui-table-view')[0];
-									var tpl = template('tpl', res.data);
-									ul.insertAdjacentHTML('afterBegin', tpl);
-									page++;
-									first_fresh.endPullUpToRefresh();
-
-								} else {
-									self.endPullUpToRefresh();
-								}
-							},
-							error: function(xhr, type, errorThrown) {
+					//通过ajax从服务器获取新数据
+					mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/index', {
+						data: {
+							page: page
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(res) {
+							if(res.code == 200) {
+								var ul = $('.mui-slider-group .mui-table-view')[0];
+								var tpl = template('tpl', res.data);
+								ul.insertAdjacentHTML('afterBegin', tpl);
+								page++;
 								first_fresh.endPullUpToRefresh();
-								mui.alert('获取数据失败', '提示', function() {}, 'div');
+
+							} else {
+								self.endPullUpToRefresh();
 							}
-						});
-					
+						},
+						error: function(xhr, type, errorThrown) {
+							first_fresh.endPullUpToRefresh();
+							mui.alert('获取数据失败', '提示', function() {}, 'div');
+						}
+					});
+
 					$('#sliderSegmentedControl').on('tap', '.mui-control-item', function() {
 						var isFirst = this.getAttribute('data-isFirst');
 						if(!isFirst) {
@@ -411,7 +414,7 @@
 						var index = this.index;
 						var self = document.querySelector('.mui-slider-group .mui-scroll')[index];
 						//通过ajax从服务器获取新数据
-						mui.ajax('http://juhe.ldufd.com/api/index', {
+						mui.ajax('http://10.0.2.2/juheapp/public/index.php/api/index', {
 							data: {
 								page: page
 							},
@@ -455,12 +458,28 @@
 						$.openWindow({
 							url: 'article/index.html',
 							id: 'article',
-							extras: { data_id: data_id },
+							extras: {
+								data_id: data_id
+							},
 							show: {
-							    autoShow: false
-						    }
+								autoShow: false
+							}
 						})
 					})
+
+					//搜索
+					document.querySelector("form").addEventListener("submit", function(e) {
+						e.preventDefault(); //阻止冒泡事件
+						var keyword = document.getElementById('search').value;
+						if(keyword == "") return;
+						$.openWindow({
+							url: 'search/index.html?keyword=' + keyword,
+							id: 'search',
+							show: {
+								autoShow: false
+							}
+						})
+					});
 
 				});
 			})(mui);

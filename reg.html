@@ -71,18 +71,18 @@
 						if(check) {
 							regButton.innerText = '注册中...';
 							regButton.setAttribute('disabled', 'disabled');
-							mui.post('http://juhe.ldufd.com/api/user/register', regInfo, function(res) {
+							mui.post('http://10.0.2.2/juheapp/public/index.php/api/user/register', regInfo, function(res) {
 								if(res.code == 200) {
 									mui.toast('注册成功,正在登录...');
 									var loginInfo = {
 										username: regInfo.email,
 										password: regInfo.password,
 										client_id: 3,
-										client_secret: 'GTQCEuQDNIgPMBlWqBfoTqiOa101TcaIhHV4Umf3',
+										client_secret: 'dHbef10EHWF7Fie1MfKruRpXOJMn9APqvzNVkkfB',
 										scope: '*',
 										grant_type: 'password'
 									};
-									mui.ajax('http://juhe.ldufd.com/oauth/token', {
+									mui.ajax('http://10.0.2.2/juheapp/public/index.php/oauth/token', {
 										data: loginInfo,
 										dataType: 'json', //服务器返回json格式数据
 										type: 'post', //HTTP请求类型

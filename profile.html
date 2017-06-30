@@ -59,7 +59,7 @@
 		<script>
 			(function($, doc) {
 				//var user_avatar = doc.getElementById('user-avatar');
-				$.ajax('http://juhe.ldufd.com/api/user', {
+				$.ajax('http://10.0.2.2/juheapp/public/index.php/api/user', {
 					data: {},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
@@ -126,7 +126,7 @@
 							switch(index) {
 								case 1:
 									//注销账号
-									//localStorage.removeItem('token');
+									localStorage.removeItem('token');
 									var indexPage = plus.webview.getLaunchWebview();
 									//触发详情页面的newsId事件
 									mui.fire(indexPage, 'log_out');
